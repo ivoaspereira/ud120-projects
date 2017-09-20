@@ -39,6 +39,12 @@ print("testing time:", round(time()-t0, 3), "s")
 
 print("accuracy:", round(accuracy,3), "%")
 
+## another way of doing it
+pred = clf.predict(features_test)
+from sklearn.metrics import accuracy_score
+acc = accuracy_score(pred,labels_test)
+print("accuracy:", round(acc,3), "%")
+
 
 #########################################################
 
