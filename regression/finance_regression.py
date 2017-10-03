@@ -17,19 +17,20 @@ import sys
 import pickle
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
-dictionary = pickle.load( open("../final_project/final_project_dataset_modified.pkl", "r") )
+dictionary = pickle.load( open("../final_project/final_project_dataset_modified.pkl", "rb") )
 
 ### list the features you want to look at--first item in the 
 ### list will be the "target" feature
 features_list = ["bonus", "salary"]
-data = featureFormat( dictionary, features_list, remove_any_zeroes=True)
+#features_list = ["bonus", "long_term_incentive"]
+data = featureFormat( dictionary, features_list, remove_any_zeroes=True, sort_keys = '../tools/python2_lesson06_keys.pkl')
 target, features = targetFeatureSplit( data )
 
 ### training-testing split needed in regression, just like classification
 from sklearn.cross_validation import train_test_split
 feature_train, feature_test, target_train, target_test = train_test_split(features, target, test_size=0.5, random_state=42)
 train_color = "b"
-test_color = "b"
+test_color = "r"
 
 
 
@@ -38,11 +39,18 @@ test_color = "b"
 ### plots it correctly. Don't forget to change the test_color above from "b" to
 ### "r" to differentiate training points from test points.
 
+from sklearn import linear_model
 
+reg = linear_model.LinearRegression()
+reg.fit(feature_train, target_train)
 
+print('Coefficients: ', reg.coef_, reg.intercept_)
+print('Score (train): ', reg.score(feature_train, target_train))
+print('Score (test): ', reg.score(feature_test, target_test))
 
-
-
+#from sklearn.metrics import mean_squared_error, r2_score
+#print("Mean squared error: %.2f" % mean_squared_error(feature_train, target_train))
+#print('Variance score: %.2f' % r2_score(feature_train, target_train))
 
 
 ### draw the scatterplot, with color-coded training and testing points
@@ -64,6 +72,11 @@ try:
     plt.plot( feature_test, reg.predict(feature_test) )
 except NameError:
     pass
+
+reg.fit(feature_test, target_test)
+plt.plot(feature_train, reg.predict(feature_train), color="b") 
+print('New coefficients: ', reg.coef_, reg.intercept_)
+
 plt.xlabel(features_list[1])
 plt.ylabel(features_list[0])
 plt.legend()
