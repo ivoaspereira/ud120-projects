@@ -53,7 +53,8 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
 
             ### use str.replace() to remove any instances of the words
             ### ["sara", "shackleton", "chris", "germani"]
-            list_rep  = ["sara", "shackleton", "chris", "germani"]
+            #list_rep  = ["sara", "shackleton", "chris", "germani"]
+            list_rep  = ["sara", "shackleton", "chris", "germani", "sshacklensf", "cgermannsf"]
             
             for e in list_rep:
                 words = words.replace(e,"")
@@ -70,8 +71,8 @@ print ("emails processed")
 from_sara.close()
 from_chris.close()
 
-#pickle.dump( word_data, open("your_word_data.pkl", "w") )
-#pickle.dump( from_data, open("your_email_authors.pkl", "w") )
+pickle.dump( word_data, open("your_word_data.pkl", "wb") )
+pickle.dump( from_data, open("your_email_authors.pkl", "wb") )
 
 print (word_data[152])
 

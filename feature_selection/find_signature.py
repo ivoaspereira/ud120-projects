@@ -10,8 +10,8 @@ numpy.random.seed(42)
 ### mini-project.
 words_file = "../text_learning/your_word_data.pkl" 
 authors_file = "../text_learning/your_email_authors.pkl"
-word_data = pickle.load( open(words_file, "r"))
-authors = pickle.load( open(authors_file, "r") )
+word_data = pickle.load( open(words_file, "rb"))
+authors = pickle.load( open(authors_file, "rb") )
 
 
 
@@ -39,5 +39,19 @@ labels_train   = labels_train[:150]
 
 ### your code goes here
 
+from sklearn.tree import DecisionTreeClassifier
+clf = DecisionTreeClassifier()
+clf.fit(features_train,labels_train)
+scr = clf.score(features_test,labels_test)
+print(scr)
 
 
+importances = clf.feature_importances_
+import numpy as np
+indices = np.argsort(importances)[::-1]
+print('Feature Ranking: ')
+for i in range(10):
+    print("{} feature no.{} ({})".format(i+1,indices[i],importances[indices[i]]))
+
+#most powerful word
+print(vectorizer.get_feature_names()[21323])
