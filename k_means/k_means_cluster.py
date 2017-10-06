@@ -90,6 +90,27 @@ print("max salary: ",max(salary))
 print("min salary: ",min(salary))
 
 
+# feature scaling
+salary = [min(salary),200000.0,max(salary)]
+ex_stok = [min(ex_stok),1000000.0,max(ex_stok)]
+print(salary)
+print(ex_stok)
+
+from sklearn import preprocessing
+
+salary = numpy.array([[e] for e in salary])
+ex_stok = numpy.array([[e] for e in ex_stok])
+
+scaler_salary = preprocessing.MinMaxScaler()
+scaler_stok = preprocessing.MinMaxScaler()
+
+rescaled_salary = scaler_salary.fit_transform(salary)
+rescaled_stock = scaler_salary.fit_transform(ex_stok)
+
+print(rescaled_salary)
+print(rescaled_stock)
+
+
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
 try:
